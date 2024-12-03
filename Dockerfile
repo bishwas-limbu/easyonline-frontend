@@ -1,4 +1,4 @@
-FROM node:alphine3.18 as build-stage
+FROM node:18-alpine as build-stage
 WORKDIR /app
 COPY .env .env
 
