@@ -1,11 +1,12 @@
 FROM node:alphine3.18 as build-stage
-RUN mkdir /app
+WORKDIR /app
+COPY .env .env
 
-COPY . /app
+COPY package*.json  ./
 
-COPY .env /app
+COPY . .
 
-COPY package*.json  /app
+
 
 RUN npm install
 
@@ -16,7 +17,7 @@ FROM nginx:1.23-alpine
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=build-stage  /app/dist/* .
+COPY --from=build-stage /app/dist/* /usr/share/nginx/html
 
 
 EXPOSE 80
