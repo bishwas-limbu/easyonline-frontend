@@ -1,41 +1,26 @@
-FROM node:18-alpine
-WORKDIR /app
+FROM node:alphine3.18 as build-stage
+RUN mkdir /app
 
-COPY package*.json  ./
+COPY . /app
 
+COPY .env /app
+
+COPY package*.json  /app
 
 RUN npm install
-COPY .env .env
-COPY . .
 
 RUN npm run build
 
-COPY build /usr/share/nginx/html
 
-#EXPOSE 5173
+FROM nginx:1.23-alpine
+
+WORKDIR /usr/share/nginx/html
+
+COPY --from=build-stage  /app/dist/* .
+
 
 EXPOSE 80
 
-CMD ["nginx","-g","daemon off;"]
 
-#CMD ["npm", "run","dev"]
+ENTRYPOINT ["nginx","-g","daemon off;"]
 
-
-
-
-# FROM node:18-alpine
-
-# WORKDIR /app
-
-# COPY package*.json  ./
-
-
-# RUN npm install
-# COPY .env .env
-# COPY . .
-
-# RUN npm run build
-
-# EXPOSE 5173
-
-# CMD ["npm", "run","dev"]
