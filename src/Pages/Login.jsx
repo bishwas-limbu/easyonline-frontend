@@ -70,7 +70,7 @@ function Login() {
           setAddress({ streetName: "", cityName: "", stateName: "", zipCode: "", countryName:""});
           toast.success(response.data.message);
           setCurrentState('LOGIN');
-          navigate("/")
+          navigate("/login")
 
         } else {
           toast.error(response.data.message);

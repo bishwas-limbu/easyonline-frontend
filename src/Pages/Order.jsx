@@ -21,7 +21,7 @@ function Order() {
         return null;
       }
 
-     const response = await axios.get('http://localhost:8000/api/v2/orders/user', {headers: { Authorization: `Bearer ${token}` }});
+     const response = await axios.get(backend_url + 'orders/user', {headers: { Authorization: `Bearer ${token}` }});
      // console.log("orders",response.data)
       if(response.data.success){
         let allOrdersItem = [];
